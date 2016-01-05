@@ -1,0 +1,33 @@
+---
+layout: default
+title: Profile
+permalink: /profile/
+exclude_from_nav: true
+---
+
+<!doctype html>
+<html ng-app='bowtieApp'>
+  <body ng-controller='homeController'>
+    <h1>Profile Information</h1>
+    <p>This profile information is being displayed with Angular.</p>
+    <div>
+      <a href="/edit_profile/" class="btn btn-default btn-sm">Edit Profile</a>
+    </div>
+
+    <h2>Hi [[ userName.name ]]!</h2>
+    <div class="col-xs-4">
+      <h2>Avatar:</h2>
+        <img id="avatar" src='[[privateProfile.avatar.url]]' class='img img-circle'>
+    </div>
+    <div class="col-xs-8">
+      <h2>Angular Interest:</h2>
+        <h5>[[ privateProfile.angular_interest ]]</h5>
+      <h2>How you heard about it:</h2>
+        <h5>[[ privateProfile.referral ]]<h5>
+      <h2>Are you a current user:</h2>
+        <h5>[[ privateProfile.angular_user ]]</h5>
+      <h2>Age:</h2>
+        <h5>[[ privateProfile.age ]]</h5>
+      </div>
+  </body>
+</html>

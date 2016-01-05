@@ -2,19 +2,11 @@
 <script type="text/javascript" src="/js/bootstrap-datepicker.js"></script>
 
  <label for="datepicker" class="text-left">Select Date</label>
- <input class="datepicker form-control" id="date-selection" type="text" name="user[date]"/>
+ <input class="datepicker form-control" type="text"/>
 
 <script type="text/javascript">
  $('.datepicker').datepicker({
   	 weekStart:1,
   	 color: 'blue'
  });
-</script>
-
-
-
-<script type="text/javascript">
-bowtie.user.profile(function(user){
-  $("#date-selection").val(user.date);
-});
 </script>

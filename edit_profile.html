@@ -1,0 +1,145 @@
+---
+layout: default
+title: Edit Profile
+permalink: /edit_profile/
+exclude_from_nav: true
+---
+
+<!-- include profile.js to add information to bowtie user profiles -->
+<script type="text/javascript" src="/js/profile.js"></script>
+<html ng-app='bowtieApp'>
+<body ng-controller='homeController'>
+
+<h1>Edit Profile</h1>
+<p>These form fields are populated with Angular.</p>
+<br>
+<div class='float-right'>
+  <a href="/profile/" class="btn btn-default">Go To Profile Page</a>
+</div>
+  <div class='form-group'>
+    <div id="profile" class="user-profile text-left">
+      <div class="row img-upload">
+        <div class="col-xs-4">
+          <img id="avatar" src="[[privateProfile.avatar.url || '/img/user1.png']]" class='img img-circle'>
+        </div>
+        <div class="col-xs-8">
+          <form class="form-inline" role="form">
+            <div class="form-group">
+              <label for="exampleInputFile">Profile Pic</label>
+              <input type="file" id="avatar-upload">
+              <p class="help-block">Select a new img (1MB Max) </p>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class='form-group'>
+        <div class="input">
+          <label class="text">What interests you most about Angular?</label>
+          <input aria-required="true" ng-model="myUser.angular_interest" class="string text form-control" id="angular_interest" placeholder="[[ privateProfile.angular_interest ]]" value="[[ privateProfile.angular_interest ]]" maxlength="255" size="255" type="text" />
+        </div>
+      </div>
+      <div class='form-group'>
+        <label class="text">How did you hear about Angular?</label>
+        <div class="select-style">
+          <div class="input select required user_plan_id">
+            <select class="select" ng-model="myUser.referral" id="referral" required>
+              <option value="[[ privateProfile.referral ]]" selected disabled> [[ privateProfile.referral ]]</option>
+              <option value="Coworker" >Coworker</option>
+              <option value="Family Member">Family Member</option>
+              <option value="School">School</option>
+              <option value="The Internet">The Internet</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class='form-group'>
+        <div class="field-box">
+          <label>Are you an Angular user?:</label>
+          <input type="radio" name="Yes" value="Yes" ng-model="myUser.angular_user" id="angular_user">Yes  |
+          <input type="radio" name="No" value="No" ng-model="myUser.angular_user" id="angular_user">No
+        </div>
+      </div>
+      <div class='form-group'>
+        <label class='text'>What's your age?</label>
+        <div ng-if="showMe">
+          <p style="color: red;">
+            Input must be a number
+          </p>
+        </div>
+        <div ng-if="numbRequired">
+          <p style="color: red;">
+            Age is required
+          </p>
+        </div>
+        <input aria-required="true" ng-model="myUser.age" ng-change="numberCheck(myUser.age)" class="string text form-control" id="age" placeholder="[[privateProfile.age]]" maxlength="2" size="255" type="text"/>
+      </div>
+      <br>
+
+  <!-- BowTie account settings information - uneditable form -->
+      <form class="form-horizontal" role="form">
+        <div class="form-group row">
+          <label class="col-xs-2" for="name">Name:</label>
+          <div class="col-xs-8">
+            <input type="email" class="form-control disabled" id="user_name" placeholder="user name" disabled="true">
+          </div>
+          <div class="col-xs-2">
+            <a href="/users/edit" small class="pull-right note">Account Settings</a>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-xs-2" for="email">Email:</label>
+          <div class="col-xs-8">
+            <input type="email" class="form-control disabled" id="user_email" placeholder="user.email" disabled="true">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-xs-2" for="password">Password:</label>
+          <div class="col-xs-8">
+            <input type="email" class="form-control disabled" id="user_password" placeholder="********" disabled="true">
+          </div>
+        </div>
+      </form>
+      <br/>
+    </div>
+  </div>
+</body>
+</html>
+
+<script type="text/javascript">
+bowtie.user.info(function(user){
+  if(!user){
+    // There is no user signed in
+  }else{
+
+    $("#user_name").val(user.name);
+    $("#user_email").val(user.email);
+
+    bowtie.user.profile(function(profile){
+      if(profile.avatar){
+        $("#avatar").src = profile.avatar.url;
+      }
+    });
+
+    $("#avatar-upload").on("change", function(){
+      var file = this.files[0];
+
+      // Update the current avatar preview
+      if(file){
+         var fr = new FileReader();
+         fr.onload = function () {
+           $("#avatar").each(function(){
+             this.src = fr.result;
+           });
+         }
+         fr.readAsDataURL(file);
+      }
+
+      bowtie.user.profile({
+        avatar: file
+      });
+    });
+  }
+});
+
+
+</script>

@@ -1,6 +1,16 @@
 <!-- include profile.js to add information to bowtie user profiles -->
 <script type="text/javascript" src="/js/profile.js"></script>
 
+<script type="text/javascript">
+bowtie.user.info(function(user){
+  if(!user){
+    // There is no user signed in
+  }else{
+    $("#user_name").val(user.name);
+    $("#user_email").val(user.email);
+    $("#user_plan").val(user.plan_id);
+</script>
+
 
 <a href="#" class="btn btn-info" data-toggle="modal" data-target="#profile">Edit Profile</a>
 
@@ -36,7 +46,7 @@
                   <label class="text">
                     <i class="fa fa-twitter"></i>Twitter Profile
                   </label>
-                  <input aria-required="true" class="string text form-control" id="profile_twitter_handle" maxlength="255" name="profile[twitter_handle]" placeholder="@example"  size="255" type="text" />
+                  <input aria-required="true" class="string text form-control" id="twitter" maxlength="255" name="user[twitter]" placeholder="@example"  size="255" type="text" value="" />
                 </div>
               </div>
 
@@ -45,11 +55,11 @@
                   Select Something
                 </label>
                 <div class="select-style">
-                  <div class="input select required">
-                    <select class="select" id="profile_selection" name="profile[selection]" >
-                      <option>Example 1</option>
-                      <option>Example 2</option>
-                      <option>Example 3</option>
+                  <div class="input select required user_plan_id">
+                    <select class="select" id="user_plan_id" name="user[plan_id]">
+                      <option value="">Example 1</option>
+                      <option value="">Example 2</option>
+                      <option value="">Example 3</option>
                     </select>
                   </div>
                 </div>
@@ -57,9 +67,9 @@
 
               <div class='form-group'>
                 <div class="field-box">
-                  <label>Message:</label>
+                  <label>Info:</label>
                   <small class="pull-right note"> Input Instructions</small>
-                  <textarea class="form-control" id="profile_message" rows="4"></textarea>
+                  <textarea class="form-control" id="user_info" rows="4"></textarea>
                 </div>
               </div>
 
@@ -131,20 +141,3 @@
     </div>
   </div>
 </div>
-
-<script type="text/javascript">
-bowtie.user.info(function(user){
-  if(!user){
-    // There is no user signed in
-  }else{
-    $("#user_name").val(user.name);
-    $("#user_email").val(user.email);
-    $("#user_plan").val(user.plan_id);
-  }
-});
-bowtie.user.profile(function(profile){
-    $("#profile_twitter_handle").val(profile.twitter_handle);
-    $("#profile_message").val(profile.message);
-    $("#profile_selection").val(profile.selection);
-});
-</script>
